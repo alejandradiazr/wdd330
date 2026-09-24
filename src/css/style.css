@@ -90,7 +90,7 @@ p {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -260,4 +260,45 @@ button {
 footer {
   font-size: var(--small-font);
   padding: 1em;
+}
+
+.category {
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-list li {
+  text-align: center;
+}
+
+.category-list a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.category-list img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.category-list h2 {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+  .category-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
