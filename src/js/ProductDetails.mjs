@@ -32,7 +32,18 @@ export default class ProductDetails {
             product.NameWithoutBrand;
 
         const image = document.querySelector('.product__image');
+
+        image.srcset = `
+        ${product.Images.PrimarySmall} 80w,
+        ${product.Images.PrimaryMedium} 160w,
+        ${product.Images.PrimaryLarge} 320w,
+        ${product.Images.PrimaryExtraLarge} 600w
+    `;
+
         image.src = product.Images.PrimaryLarge;
+
+        image.sizes = '(max-width: 600px) 160px, (max-width: 900px) 320px, 600px';
+
         image.alt = product.Name;
 
         document.querySelector('.product__price').textContent =
