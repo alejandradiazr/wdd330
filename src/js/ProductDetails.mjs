@@ -32,7 +32,7 @@ export default class ProductDetails {
             product.NameWithoutBrand;
 
         const image = document.querySelector('.product__image');
-        image.src = `${import.meta.env.BASE_URL}${product.Image.replace(/^\//, '')}`;
+        image.src = product.Images.PrimaryLarge;
         image.alt = product.Name;
 
         document.querySelector('.product__price').textContent =
