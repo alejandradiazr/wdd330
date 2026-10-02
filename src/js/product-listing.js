@@ -1,11 +1,11 @@
 import { getParam, loadHeaderFooter } from './utils.mjs';
-import ProductData from './ProductData.mjs';
+import ExternalServices from './ExternalServices.mjs';
 
 loadHeaderFooter();
 
 const category = getParam('category');
 
-const dataSource = new ProductData(category);
+const dataSource = new ExternalServices(category);
 
 async function init() {
   const products = await dataSource.getData();

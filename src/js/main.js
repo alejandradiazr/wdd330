@@ -1,10 +1,10 @@
 import { loadHeaderFooter } from './utils.mjs';
 
 loadHeaderFooter();
-import ProductData from './ProductData.mjs';
+import ExternalServices from './ExternalServices.mjs';
 import ProductList from './ProductList.mjs';
 
-const dataSource = new ProductData('tents');
+const dataSource = new ExternalServices('tents');
 
 const listElement = document.querySelector('.product-list');
 
