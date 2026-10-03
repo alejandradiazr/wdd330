@@ -1,4 +1,9 @@
-import { getLocalStorage } from './utils.mjs';
+import {
+    getLocalStorage,
+    removeLocalStorage,
+    alertMessage,
+} from './utils.mjs';
+
 import ExternalServices from './ExternalServices.mjs';
 
 function formDataToJSON(formElement) {
@@ -24,19 +29,33 @@ export default class CheckoutProcess {
 
     async checkout(form) {
         const order = formDataToJSON(form);
-
         order.orderDate = new Date().toISOString();
         order.orderTotal = this.orderTotal;
         order.tax = this.tax;
         order.shipping = this.shipping;
         order.items = this.packageItems(this.list);
-
         const service = new ExternalServices();
-        const response = await service.checkout(order);
 
-        console.log('Order response:', response);
+        try {
+            const response = await service.checkout(order);
+            console.log('Order response:', response);
 
-        return response;
+            removeLocalStorage(this.key);
+            window.location.href = './success.html';
+
+            return response;
+        }
+
+        catch (err) {
+            console.error('Checkout error:', err);
+
+            const messages =
+                err.message && typeof err.message === 'object'
+                    ? Object.values(err.message)
+                    : [err.message || 'Unable to place your order.'];
+
+            messages.forEach((message) => alertMessage(message));
+        }
     }
 
     packageItems(items) {

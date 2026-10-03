@@ -306,3 +306,29 @@ footer {
 .hide {
   display: none;
 }
+
+.alert {
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 2px solid var(--tertiary-color);
+  background-color: #fff3e6;
+  color: var(--dark-grey);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert p {
+  padding: 0;
+  margin: 0;
+}
+
+.alert-close {
+  margin: 0;
+  padding: 0.25em 0.6em;
+  font-size: 1rem;
+  background-color: transparent;
+  color: var(--dark-grey);
+  border: none;
+  cursor: pointer;
+}
