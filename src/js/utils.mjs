@@ -13,6 +13,11 @@ export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
+// remove data from local storage
+export function removeLocalStorage(key) {
+  localStorage.removeItem(key);
+}
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
@@ -54,7 +59,6 @@ export async function loadHeaderFooter() {
   );
   const headerElement = document.querySelector("#main-header");
   const footerElement = document.querySelector("#main-footer");
-
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
 }
@@ -70,7 +74,29 @@ export function renderListWithTemplate(
   if (clear) {
     parentElement.innerHTML = "";
   }
-
   const htmlStrings = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
+
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement('div');
+  alert.classList.add('alert');
+
+  alert.innerHTML = `
+    <p>${message}</p>
+    <button type="button" class="alert-close">X</button>
+  `;
+
+  alert.addEventListener('click', function (e) {
+    if (e.target.classList.contains('alert-close')) {
+      this.remove();
+    }
+  });
+
+  const main = document.querySelector('main');
+  main.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
 }
