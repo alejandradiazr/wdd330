@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="Miso Maybe - Discover something delicious to cook today." />
+
+    <title>Miso Maybe | What are we cooking?</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+    <header id="main-header"></header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <p class="eyebrow">Welcome to Miso Maybe</p>
+
+                <h1>What are we craving today?</h1>
+
+                <p class="hero-text">
+                    Not sure what to cook? Let Miso help you discover something
+                    delicious.
+                </p>
+
+                <form id="search-form" class="search-form">
+                    <label for="search-input" class="visually-hidden">
+                        Search for a recipe
+                    </label>
+
+                    <input type="search" id="search-input" placeholder="Search for a recipe..." autocomplete="off" />
+
+                    <button type="submit">Search</button>
+                </form>
+
+                <div class="mood-section">
+                    <h2>What are you in the mood for?</h2>
+
+                    <div class="mood-buttons">
+                        <button type="button" data-mood="sweet">Sweet</button>
+                        <button type="button" data-mood="cozy">Cozy</button>
+                        <button type="button" data-mood="spicy">Spicy</button>
+                        <button type="button" data-mood="fresh">Fresh</button>
+                        <button type="button" data-mood="quick">Quick</button>
+                    </div>
+                </div>
+
+                <div class="ingredient-section">
+                    <p class="eyebrow">🥕 Ingredient Discovery</p>
+
+                    <h2>What's in your kitchen?</h2>
+
+                    <p>
+                        Tell Miso an ingredient you have, and let's see what we can make!
+                    </p>
+
+                    <form id="ingredient-form" class="search-form">
+                        <label for="ingredient-input" class="visually-hidden">
+                            Search recipes by ingredient
+                        </label>
+
+                        <input type="search" id="ingredient-input" placeholder="Try chicken, avocado, rice..."
+                            autocomplete="off" />
+
+                        <button type="submit">Find Recipes</button>
+                    </form>
+                </div>
+
+                <button type="button" id="surprise-button" class="surprise-button">
+                    ✨ Surprise Me ✨
+                </button>
+            </div>
+        </section>
+
+        <section class="recipe-section">
+            <div class="section-heading">
+                <p class="eyebrow">Miso's Little Picks</p>
+                <h2>Maybe you'll love these</h2>
+            </div>
+
+            <div id="recipe-results" class="recipe-grid"></div>
+        </section>
+    </main>
+
+    <footer id="main-footer"></footer>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+
+</html>
