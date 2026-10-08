@@ -31,14 +31,21 @@ async function loadPartial(selector, file) {
 }
 
 async function loadHeaderFooter() {
-    await loadPartial("#main-header", "/partials/header.html");
-    await loadPartial("#main-footer", "/partials/footer.html");
+    await loadPartial(
+        "#main-header",
+        `${import.meta.env.BASE_URL}partials/header.html`
+    );
+
+    await loadPartial(
+        "#main-footer",
+        `${import.meta.env.BASE_URL}partials/footer.html`
+    );
 }
 
 function recipeCard(recipe) {
     return `
     <a
-      href="/recipe/?id=${recipe.idMeal}"
+      href="${import.meta.env.BASE_URL}recipe/?id=${recipe.idMeal}"
       class="recipe-card"
     >
       <img
@@ -124,7 +131,7 @@ async function handleSurprise() {
 
     results.innerHTML = `
     <a
-      href="/recipe/?id=${recipe.idMeal}"
+      href="${import.meta.env.BASE_URL}recipe/?id=${recipe.idMeal}"
       class="recipe-card"
     >
       <img
