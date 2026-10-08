@@ -22,12 +22,12 @@ async function loadPartial(selector, file) {
 async function loadHeaderFooter() {
     await loadPartial(
         "#main-header",
-        `${import.meta.env.BASE_URL}partials/header.html`
+        `${import.meta.env.BASE_URL}public/partials/header.html`
     );
 
     await loadPartial(
         "#main-footer",
-        `${import.meta.env.BASE_URL}partials/footer.html`
+        `${import.meta.env.BASE_URL}public/partials/footer.html`
     );
 }
 
