@@ -29,11 +29,22 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install dependencies
+      - name: Install main project dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build main project
         run: npm run build
+
+      - name: Install Miso Maybe dependencies
+        working-directory: ./miso-maybe
+        run: npm ci
+
+      - name: Build Miso Maybe
+        working-directory: ./miso-maybe
+        run: npm run build
+
+      - name: Copy Miso Maybe into main dist
+        run: cp -r ./miso-maybe/dist ./dist/miso-maybe
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
