@@ -2,63 +2,63 @@ import { getRecipeById } from "./api.js";
 import { getCountryInfo } from "./country.js";
 
 async function loadPartial(selector, file) {
-    const element = document.querySelector(selector);
+  const element = document.querySelector(selector);
 
-    if (!element) return;
+  if (!element) return;
 
-    try {
-        const response = await fetch(file);
+  try {
+    const response = await fetch(file);
 
-        if (!response.ok) {
-            throw new Error(`Could not load ${file}`);
-        }
-
-        element.innerHTML = await response.text();
-    } catch (error) {
-        console.error(error);
+    if (!response.ok) {
+      throw new Error(`Could not load ${file}`);
     }
+
+    element.innerHTML = await response.text();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function loadHeaderFooter() {
-    await loadPartial(
-        "#main-header",
-        `${import.meta.env.BASE_URL}partials/header.html`
-    );
+  await loadPartial(
+    "#main-header",
+    `${import.meta.env.BASE_URL}partials/header.html`
+  );
 
-    await loadPartial(
-        "#main-footer",
-        `${import.meta.env.BASE_URL}partials/footer.html`
-    );
+  await loadPartial(
+    "#main-footer",
+    `${import.meta.env.BASE_URL}partials/footer.html`
+  );
 }
 
 function getRecipeId() {
-    const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
 
-    return params.get("id");
+  return params.get("id");
 }
 
 async function displayRecipe() {
-    const recipeId = getRecipeId();
-    const container = document.querySelector("#recipe-details");
+  const recipeId = getRecipeId();
+  const container = document.querySelector("#recipe-details");
 
-    if (!recipeId) {
-        container.innerHTML = "<p>Recipe not found. 🐱</p>";
-        return;
-    }
+  if (!recipeId) {
+    container.innerHTML = "<p>Recipe not found. 🐱</p>";
+    return;
+  }
 
-    container.innerHTML = "<p>Miso is preparing your recipe... 🐱🍜</p>";
+  container.innerHTML = "<p>Miso is preparing your recipe... 🐱🍜</p>";
 
-    const recipe = await getRecipeById(recipeId);
+  const recipe = await getRecipeById(recipeId);
 
-    if (!recipe) {
-        container.innerHTML =
-            "<p>Sorry! Miso couldn't find that recipe. 🐱</p>";
-        return;
-    }
+  if (!recipe) {
+    container.innerHTML =
+      "<p>Sorry! Miso couldn't find that recipe. 🐱</p>";
+    return;
+  }
 
-    const countryInfo = await getCountryInfo(recipe.strArea);
+  const countryInfo = await getCountryInfo(recipe.strArea);
 
-    container.innerHTML = `
+  container.innerHTML = `
     <article class="recipe-detail-card">
       <img
         src="${recipe.strMealThumb}"
@@ -76,7 +76,7 @@ async function displayRecipe() {
         </p>
 
 ${countryInfo
-            ? `
+      ? `
       <div class="country-card">
         <p class="eyebrow">🌎 A Little Taste Of...</p>
         <h2>${countryInfo.name || recipe.strArea}</h2>
@@ -84,13 +84,15 @@ ${countryInfo
   <strong>Capital:</strong>
   ${countryInfo.capital || "Not available"}
 </p>
-          <strong>Region:</strong>
-          ${countryInfo.region || "Not available"}
-        </p>
+
+<p>
+  <strong>Region:</strong>
+  ${countryInfo.region || "Not available"}
+</p>
       </div>
     `
-            : ""
-        }
+      : ""
+    }
 
         <button
           type="button"
@@ -119,42 +121,58 @@ ${countryInfo
     </article>
   `;
 
-    const saveButton = document.querySelector("#save-recipe");
+  const saveButton = document.querySelector("#save-recipe");
 
-    saveButton.addEventListener("click", () => {
-        saveRecipe(recipe);
+  function updateSaveButton() {
+    const favorites =
+      JSON.parse(localStorage.getItem("misoFavorites")) || [];
 
-        saveButton.textContent = "💗 Saved to My Little Cookbook!";
-    });
+    const alreadySaved = favorites.some(
+      (favorite) => favorite.idMeal === recipe.idMeal
+    );
+
+    saveButton.textContent = alreadySaved
+      ? "💗 Saved to My Little Cookbook!"
+      : "❤️ Save to My Little Cookbook";
+
+    saveButton.disabled = alreadySaved;
+  }
+
+  updateSaveButton();
+
+  saveButton.addEventListener("click", () => {
+    saveRecipe(recipe);
+    updateSaveButton();
+  });
 }
 
 function saveRecipe(recipe) {
-    const favorites =
-        JSON.parse(localStorage.getItem("misoFavorites")) || [];
+  const favorites =
+    JSON.parse(localStorage.getItem("misoFavorites")) || [];
 
-    const alreadySaved = favorites.some(
-        (favorite) => favorite.idMeal === recipe.idMeal
+  const alreadySaved = favorites.some(
+    (favorite) => favorite.idMeal === recipe.idMeal
+  );
+
+  if (!alreadySaved) {
+    favorites.push(recipe);
+
+    localStorage.setItem(
+      "misoFavorites",
+      JSON.stringify(favorites)
     );
-
-    if (!alreadySaved) {
-        favorites.push(recipe);
-
-        localStorage.setItem(
-            "misoFavorites",
-            JSON.stringify(favorites)
-        );
-    }
+  }
 }
 
 function getIngredients(recipe) {
-    const ingredients = [];
+  const ingredients = [];
 
-    for (let i = 1; i <= 20; i++) {
-        const ingredient = recipe[`strIngredient${i}`];
-        const measure = recipe[`strMeasure${i}`];
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = recipe[`strIngredient${i}`];
+    const measure = recipe[`strMeasure${i}`];
 
-        if (ingredient && ingredient.trim() !== "") {
-            ingredients.push(`
+    if (ingredient && ingredient.trim() !== "") {
+      ingredients.push(`
         <li class="ingredient-item">
           <label>
             <input type="checkbox" />
@@ -164,10 +182,10 @@ function getIngredients(recipe) {
           </label>
         </li>
       `);
-        }
     }
+  }
 
-    return ingredients.join("");
+  return ingredients.join("");
 }
 
 loadHeaderFooter();

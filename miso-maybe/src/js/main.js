@@ -208,4 +208,33 @@ document.querySelectorAll("[data-mood]").forEach((button) => {
     });
 });
 
+async function loadFeaturedRecipes() {
+    const results = document.querySelector("#recipe-results");
+
+    results.innerHTML = `
+        <p class="loading-message">
+            Miso is picking a few favorites for you... 🐱💗
+        </p>
+    `;
+
+    const recipes = await searchRecipes("chicken");
+
+    if (recipes.length === 0) {
+        results.innerHTML = `
+            <p>
+                Miso couldn't find today's picks. Try searching for something!
+                🐱
+            </p>
+        `;
+        return;
+    }
+
+    results.innerHTML = recipes
+        .slice(0, 6)
+        .map(recipeCard)
+        .join("");
+}
+
+loadFeaturedRecipes();
+
 console.log("Miso Maybe is ready! 🐱🍜");

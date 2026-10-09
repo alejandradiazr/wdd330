@@ -501,3 +501,56 @@ h1 {
 .country-card {
     animation: fadeInUp 0.7s ease-out;
 }
+
+.remove-recipe-button {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--dusty-rose);
+    border-radius: 12px;
+    background-color: var(--cream);
+    color: var(--plum);
+    font: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.remove-recipe-button:hover {
+    background-color: var(--ivory);
+    transform: translateY(-2px);
+}
+
+.remove-recipe-button:focus-visible {
+    outline: 3px solid var(--plum);
+    outline-offset: 3px;
+}
+
+.loading-message {
+    text-align: center;
+    color: var(--plum);
+    padding: 24px 16px;
+    animation: misoPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes misoPulse {
+    from {
+        opacity: 0.55;
+        transform: translateY(2px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+}
+
+.recipe-card {
+    animation: fadeInUp 0.45s ease both;
+}
+
+.surprise-button:focus-visible,
+.mood-buttons button:focus-visible {
+    outline: 3px solid var(--plum);
+    outline-offset: 3px;
+}
